@@ -1,0 +1,61 @@
+SenseSight/
+├── .venv/                                 # Virtual environment for Python dependencies
+├── backend/                               # Backend Code (FastAPI)
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── _init_.py
+│   │   │   ├── controllers/               # Endpoint Handlers
+│   │   │   │   ├── _init_.py
+│   │   │   │   ├── auth_controller.py     # Handles login/registration
+│   │   │   │   ├── dashboard_controller.py
+│   │   │   │   └── profile_controller.py
+│   │   │   └── errors/                    # Error Handling
+│   │   │       ├── _init_.py
+│   │   │       └── http_exceptions.py
+│   │   ├── dao/                           # Database Access
+│   │   │   ├── _init_.py
+│   │   │   ├── user_dao.py
+│   │   │   └── detection_dao.py
+│   │   ├── service/                       # Business Logic
+│   │   │   ├── _init_.py
+│   │   │   ├── auth_service.py
+│   │   │   └── detection_service.py
+│   │   ├── utils/                         # Utilities
+│   │   │   ├── _init_.py
+│   │   │   ├── auth_utils.py              # JWT Authentication Helpers
+│   │   │   ├── resize_utils.py            # Image Resizing
+│   │   │   └── stats_utils.py             # For charts
+│   │   ├── vo/                            # Value Objects
+│   │   │   ├── _init_.py
+│   │   │   ├── user_vo.py
+│   │   │   └── detection_vo.py
+│   │   ├── config.py                      # DB and App Config
+│   │   ├── main.py                        # Entry point for FastAPI
+│   │   └── logging_config.py              # Logging setup
+│   ├── Dockerfile                         # Docker for backend
+├── frontend/                              # Frontend Code (React.js)
+│   ├── public/
+│   │   ├── static/                        # Static Assets
+│   │   └── templates/                     # HTML Templates
+│   ├── src/
+│   │   ├── components/                    # UI Components
+│   │   │   ├── Authentication/
+│   │   │   │   ├── LoginForm.js
+│   │   │   │   └── RegisterForm.js
+│   │   │   ├── Dashboard/
+│   │   │   │   ├── Chart.js
+│   │   │   │   └── Table.js
+│   │   │   └── Profile/
+│   │   │       └── ProfileCard.js
+│   │   ├── pages/                         # Main Pages
+│   │   │   ├── Dashboard.js
+│   │   │   ├── History.js
+│   │   │   └── Profile.js
+│   │   ├── app.js                         # Main React Component
+│   │   ├── index.js                       # React entry point
+│   │   └── package.json                   # Frontend dependencies
+│   ├── Dockerfile                         # Docker for frontend
+├── docker-compose.yaml                    # Multi-container setup
+├── .gitignore                             # Git ignore file
+├── README.md                              # Documentation
+└── requirements.txt                       # Backend dependencies
