@@ -1,0 +1,98 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.login-box {
+    background-color: #ffffff;
+    border-radius: 8px;
+    padding: 30px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    width: 350px;
+    /* Fixed width of the login box */
+    box-sizing: border-box;
+}
+
+h2 {
+    text-align: center;
+    color: #333333;
+    margin-bottom: 20px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    position: absolute;
+    top: 50%;
+    left: 10px;
+    transform: translateY(-50%);
+    color: #666666;
+}
+
+.input-group input {
+    width: calc(100% - 5px);
+    /* Adjust width to stay inside the box */
+    padding: 10px 10px 10px 40px;
+    /* Adjust padding for icons */
+    border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 14px;
+    box-sizing: border-box;
+    /* Include padding in total width */
+}
+
+.input-group label i {
+    font-size: 16px;
+    color: #666666;
+}
+
+.login-btn {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 150px;
+    /* Set a fixed width for the button */
+    margin: 0 auto;
+    /* Center the button horizontally */
+    display: block;
+    /* Ensure the button is treated as a block element for centering */
+    cursor: pointer;
+    box-sizing: border-box;
+}
+
+.login-btn:hover {
+    background-color: #45a049;
+}
+
+.create-account {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+.create-account a {
+    text-decoration: none;
+    color: #2575fc;
+}
+
+.create-account a:hover {
+    text-decoration: underline;
+}
