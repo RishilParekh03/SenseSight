@@ -1,0 +1,5 @@
+{
+    "GOOGLE_CLIENT_ID": "666793950508-741becpuk9kbnm4vdbltmh2ocddfjiv3.apps.googleusercontent.com",
+    "GOOGLE_CLIENT_SECRET": "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",
+    "DATABASE_URL": "mysql+pymysql://root:123456789@localhost:3306/project"
+}
