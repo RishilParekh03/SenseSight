@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.sidebar {
+  background-color: #000;
+  color: white;
+  width: 250px;
+  height: 100%;
+  padding: 20px 15px;
+  position: fixed;
+  left: 0;
+  top: 0;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+}
+
+.sidebar h1 {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 40px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.menu-item:last-child {
+  border-bottom: none;
+}
+
+.menu-item i {
+  font-size: 18px;
+  margin-right: 15px; /* Space between icon and text */
+}
+
+.menu-item span {
+  font-size: 16px;
+  color: white;
+}
+
+/* Main Content Styling */
+.main-content {
+  flex: 1;
+  background: linear-gradient(to bottom, #2d3ebc, #3a007b);
+  margin-left: 250px;
+  display: flex;
+  flex-direction: column;
+  transition: margin-left 0.3s ease-in-out;
+}
+
+.main-content.collapsed {
+  margin-left: 0;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  position: relative;
+}
+
+header .header-left {
+  display: flex;
+  align-items: center;
+}
+
+header .header-right {
+  display: flex;
+  align-items: center;
+}
+
+header input[type="text"] {
+  padding: 8px;
+  border-radius: 20px;
+  border: none;
+  outline: none;
+  width: 250px;
+}
+
+header .profile-icon {
+  margin-left: 10px;
+  font-size: 24px;
+  color: white;
+  cursor: pointer;
+}
+
+/* Toggle Button Styling */
+.toggle-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 24px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Text Logo Styling */
+.text-logo {
+  font-family: 'Segoe UI', sans-serif;
+  font-size: 18px;
+  color: white;
+  margin-left: 10px;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+}
+
+.main-content.collapsed .text-logo {
+  opacity: 1;
+  margin-left: 15px; /* Adjust this value to align properly */
+}
+
+.screen {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: white;
+  width: 640px;
+  height: 480px;
+}
+
+.screen input {
+  font-size: 32px;
+    font-family: 'Comic Sans MS', cursive;
+    color: white;
+    height: 480px;
+    width: 640px;
+    display: flex;
+    background-color: black;
+    align-items: center;
+    justify-content: space-around
+}
