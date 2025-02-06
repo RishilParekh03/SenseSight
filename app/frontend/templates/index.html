@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,7 +7,6 @@
     <link rel="stylesheet" href="../static/css/auth_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
 <body>
 <div class="user-container">
     <div class="user-box">
@@ -29,7 +27,7 @@
             <button type="submit" class="submit-btn" id="submit">Login</button>
         </form>
         <p class="account-query">
-            New User? <a href="/auth/registration">Create Account</a>
+            New User? <a href="/register">Create Account</a>
         </p>
     </div>
 </div>
@@ -40,25 +38,27 @@
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
 
-        const ajax = new XMLHttpRequest();
+        const formData = new URLSearchParams();
+        formData.append("username", username);
+        formData.append("password", password);
 
+        const ajax = new XMLHttpRequest();
         ajax.open("POST", "/auth/login", true);
-        ajax.setRequestHeader("Content-Type", "application/json");
+        ajax.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
         ajax.onload = function () {
-            console.log("Login Successful");
-            window.location.href = '/dashboard/home';
+            if (ajax.status === 200) {
+                const response = ajax.response;
+                document.cookie = `access_token=${response.access_token}; path=/; HttpOnly;`;
+                window.location.href = '/dashboard/home';
+            } else if (ajax.status === 404) {
+                alert("User not found");
+            } else {
+                alert("Invalid Credentials");
+            }
         };
-
-        const userData = {
-            username: username,
-            password: password,
-        };
-
-        ajax.send(JSON.stringify(userData));
-
+        ajax.send(formData.toString());
     });
 </script>
 </body>
-
 </html>

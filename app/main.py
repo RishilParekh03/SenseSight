@@ -26,5 +26,5 @@ app.include_router(auth_controller.router, tags=["Authentication"])
 app.include_router(dashboard_controller.router, prefix='/dashboard', tags=["Dashboard"])
 
 if __name__ == "__main__":
-    logger.logger.info("Server Started!")
+    logger.logger.info("Server Started")
     uvicorn.run("main:app", port=8000, reload=True)
