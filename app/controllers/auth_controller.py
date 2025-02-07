@@ -18,19 +18,19 @@ templates = Jinja2Templates(
 @router.get("/", response_class=HTMLResponse)
 async def root(request: Request):
     logger.logger.info("Default accessed")
-    return templates.TemplateResponse("TESTindex.html", {"request": request})
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @router.get('/login', response_class=HTMLResponse)
 async def login_page(request: Request):
     logger.logger.info("Login accessed")
-    return templates.TemplateResponse("index.html", {"request": request})
+    return templates.TemplateResponse("login.html", {"request": request})
 
 
 @router.get("/register", response_class=HTMLResponse)
 async def registration_page(request: Request):
     logger.logger.info("Registration page accessed")
-    return templates.TemplateResponse("user_register.html", {"request": request})
+    return templates.TemplateResponse("register.html", {"request": request})
 
 
 @router.post("/auth/register", status_code=status.HTTP_201_CREATED)

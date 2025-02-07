@@ -20,4 +20,4 @@ async def home_page(request: Request):
         return RedirectResponse(url="/login")
     user_data = auth_utils.get_current_user(token)
     logger.logger.info("Admin Accessed Home")
-    return templates.TemplateResponse("dashboard.html", {"request": request, "user_data": user_data})
+    return templates.TemplateResponse("camera.html", {"request": request, "user_data": user_data})
