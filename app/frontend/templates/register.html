@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SenseSight - Register</title>
-    <link rel="stylesheet" href="../static/css/style.css">
+    <link rel="stylesheet" href="../static/css/auth_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 
@@ -35,7 +35,7 @@
             <button type="submit" class="submit-btn" id="submit">Register</button>
         </form>
         <p class="account-query">
-            Already a User? <a href="/">Login</a>
+            Already a User? <a href="/login">Login</a>
         </p>
     </div>
 </div>
@@ -49,12 +49,17 @@
 
         const ajax = new XMLHttpRequest();
 
-        ajax.open('POST', "/auth/registration", true);
+        ajax.open('POST', "/auth/register", true);
         ajax.setRequestHeader('Content-Type', 'application/json');
 
         ajax.onload = function () {
-            console.log("New Admin Registered");
-            window.location.href = '/';
+            if (ajax.status === 201) {
+                window.location.href = '/login';
+            } else if (ajax.status === 400) {
+                alert("Please provide details")
+            } else {
+                alert("User already exists");
+            }
         };
 
         const userData = {
