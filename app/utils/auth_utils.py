@@ -10,6 +10,7 @@ import jwt
 from app.models import admin_model
 from app.schemas import admin_schema
 
+
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth = OAuth2PasswordBearer(tokenUrl="auth/login")
@@ -141,6 +142,13 @@ def fetch_admin(data, db: Session):
 
     return get_admin
 
+def fetch_admin_by_id(id: int, db: Session):
+    user = db.query(admin_model.Admin).filter(admin_model.Admin.id == id).first()
+    print(user)
+    if not user:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="User not found")
+
+    return user
 
 def fetch_all(db: Session):
     get_all = db.query(admin_model.Admin).all()

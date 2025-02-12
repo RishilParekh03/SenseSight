@@ -14,4 +14,4 @@ class Admin(Base):
     created_at = Column("created_at", DateTime, default=datetime.utcnow)
     modified_at = Column("modified_at", DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
     is_deleted = Column("is_deleted", Boolean, default=False)
-    # role_id = Column("role_id", Integer, ForeignKey("role.id"), nullable=False)
+

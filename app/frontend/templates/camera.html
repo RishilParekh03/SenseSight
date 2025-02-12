@@ -82,21 +82,16 @@
         <form id="detailsForm">
             <div class="form-group">
                 <label for="name"><i class="icon-user"></i> Name:</label>
-                <input type="text" id="name" placeholder="Enter your name" required>
+                <input type="text" id="name" name="name" readonly>
             </div>
             <div class="form-group">
                 <label for="username"><i class="icon-user"></i> Username:</label>
-                <input type="text" id="username" placeholder="Enter your username" required>
+                <input type="text" id="username" name="username" readonly>
             </div>
             <div class="form-group">
-                <label for="contact" required><i class="icon-phone"></i> Contact Number:</label>
-                <input type="text" id="contact" placeholder="Enter your contact number" required>
+                <label for="created_at">Created At:</label>
+                <input type="text" id="created_at" name="created_at" readonly>
             </div>
-            <div class="form-group">
-                <label for="age"><i class="icon-age"></i> Age:</label>
-                <input type="number" id="age" placeholder="Enter your age" required>
-            </div>
-            <button type="submit" class="submit-btn">Submit</button>
         </form>
     </div>
 </div>
@@ -135,6 +130,10 @@
         </form>
     </div>
 </div>
+<script>
+    window.userData = {{ user_data | tojson }};
+    console.log("User Data in html:", window.userData);
+</script>
 <script src="../static/js/script.js"></script>
 </body>
 

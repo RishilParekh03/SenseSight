@@ -33,10 +33,19 @@ function toggleModal(sectionId, state) {
         setTimeout(() => section.classList.remove("active"), 300);
     }
 }
+let userData = window.userData || {};
 
 // Open/Close personal details
 function openPersonalDetails() {
     closePassword();
+
+    console.log("User Data in js:", window.userData);
+    if (window.userData) {
+        document.getElementById("name").value = window.userData.name || "";
+        document.getElementById("username").value = window.userData.username || "";
+        document.getElementById("created_at").value = window.userData.created_at || "";
+    }
+
     toggleModal("personalDetails", true);
 }
 function closePersonalDetails() {
@@ -100,7 +109,23 @@ function closeLogoutPopup() {
 }
 function logout() {
     closeLogoutPopup();
-    alert("Logging out...");
+    var logoutXhr = new XMLHttpRequest();
+    logoutXhr.open("POST", "http://127.0.0.1:8000/auth/logout", true);
+    logoutXhr.withCredentials = true;
+
+    logoutXhr.onload = function () {
+        if (logoutXhr.status === 200) {
+            window.location.href = "/";
+        } else {
+            alert("Error logging out.");
+        }
+    };
+
+    logoutXhr.onerror = function () {
+        alert("Error logging out.");
+    };
+
+    logoutXhr.send();
 }
 
 // Start and stop live camera
@@ -157,3 +182,5 @@ function setupEventListeners() {
     document.getElementById("dragDropArea")?.addEventListener("dragover", event => event.preventDefault());
     document.getElementById("dragDropArea")?.addEventListener("drop", handleFileUpload);
 }
+
+document.addEventListener("DOMContentLoaded", setupEventListeners);
