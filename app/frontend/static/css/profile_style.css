@@ -8,6 +8,45 @@ body {
     align-items: center;
 }
 
+/* Navbar Style */
+
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background: linear-gradient(to right, #6a11cb, #2575fc);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.navbar-content {
+    width: 100%;
+    max-width: 1200px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+}
+
+.navbar-title {
+    font-size: 1.5rem;
+    color: white;
+    text-align: left;
+    margin: 0 0 0 20px;
+}
+
+.navbar-title a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Login Register Style */
+
 .user-container {
     display: flex;
     justify-content: center;
@@ -57,8 +96,8 @@ h2 {
     color: black;
 }
 
-.submit-btn {
-    background-color: #4CAF50;
+.submit-btn, .cancel-btn {
+    background-color: #34c759;
     color: white;
     border: none;
     padding: 10px 15px;
@@ -72,7 +111,20 @@ h2 {
 }
 
 .submit-btn:hover {
-    background-color: #45a049;
+    background-color: #28a745;
+}
+
+.cancel-btn {
+    background-color: #e74c3c;
+    padding: 10px 25px;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 1rem;
+    text-decoration: none;
+}
+
+.cancel-btn:hover {
+    background-color: #c0392b;
 }
 
 .account-query {

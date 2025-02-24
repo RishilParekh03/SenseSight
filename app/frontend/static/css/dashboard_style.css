@@ -1,10 +1,13 @@
+/* General Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
+/* Navbar Styling */
 .navbar {
     position: fixed;
     top: 0;
@@ -28,16 +31,19 @@
     padding: 0 20px;
 }
 
+/* Shift the title to the left */
 .navbar-title {
     font-size: 1.5rem;
     color: white;
     margin: 0;
     text-align: left;
     margin-left: 20px;
+    /* Ensures it's aligned to the far left */
 }
 
 .navbar-icon {
     margin-left: auto;
+    /* Push the icon to the far right */
 }
 
 .navbar-icon img {
@@ -50,6 +56,7 @@
 /* Main Container */
 .main-container {
     margin-top: 60px;
+    /* To avoid overlap with navbar */
 }
 
 /* Sections Styling */
@@ -103,15 +110,6 @@
     transition: background 0.3s;
 }
 
-.button a {
-    text-decoration: none;
-    color: white;
-}
-
-.button:hover {
-    background: #28a745;
-}
-
 .image-container {
     flex: 1;
     display: flex;
@@ -129,7 +127,7 @@
     gap: 10px;
 }
 
-.action-button {
+.logout-btn, .action-button, .submit-btn {
     padding: 10px 20px;
     background: #34c759;
     color: white;
@@ -140,23 +138,7 @@
     transition: background 0.3s;
 }
 
-.action-button:hover {
-    background: #28a745;
-}
-
-.action_1-button {
-    padding: 10px 20px;
-    background: #34c759;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    margin-left: 3%;
-    margin-top: 3%;
-    cursor: pointer;
-    transition: background 0.3s;
-}
-
-.action_1-button:hover {
+.logout-btn:hover, .button:hover, .submit-btn:hover, .action-button:hover {
     background: #28a745;
 }
 
@@ -196,13 +178,14 @@
     right: 0;
 }
 
-.close-btn {
-    align-self: flex-start;
+.upload-close-btn {
+    position: absolute;
     background: none;
+    top: 10px;
+    right: 15px;
+    color: black;
+    font-size: 50px;
     border: none;
-    color: white;
-    font-size: 2rem;
-    margin: 10px;
     cursor: pointer;
 }
 
@@ -224,10 +207,16 @@
     margin: 0 auto;
     background: transparent;
     position: relative;
+    overflow: hidden;
 }
 
-.edit-btn {
-    background: #7289da;
+.avatar-circle img {
+    width: 120px;
+    height: 120px;
+}
+
+.videoFile, .uploadBtn, .stopUpload, .startLive, .stopLive, .edit-btn {
+    background: #5b7aeb;
     color: white;
     border: none;
     padding: 8px 15px;
@@ -249,22 +238,6 @@
 
 .profile-options li:hover {
     color: white;
-}
-
-.logout-btn {
-    background: #e74c3c;
-    color: white;
-    border: none;
-    padding: 10px 25px;
-    margin-top: 50px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 1rem;
-    transition: background 0.3s ease;
-}
-
-.logout-btn:hover {
-    background: #c0392b;
 }
 
 /* Personal Details Section */
@@ -309,26 +282,6 @@
     border-radius: 10px;
 }
 
-.submit-btn {
-    padding: 8px 16px;
-    background: #34c759;
-    color: white;
-    border: none;
-    border-radius: 25px;
-    font-size: 1rem;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background 0.3s ease;
-    max-width: 150px;
-    text-align: center;
-    margin: 0 auto;
-    display: block;
-}
-
-.submit-btn:hover {
-    background: #28a745;
-}
-
 /* -------------------- */
 
 #password {
@@ -364,6 +317,7 @@
 .password-container input {
     width: 100%;
     padding-right: 40px;
+    /* Add space for the eye icon */
 }
 
 .toggle-password {
@@ -430,7 +384,7 @@
     display: block;
 }
 
-.submit-btn:hover {
+.submitt-btn:hover {
     background: #28a745;
 }
 
@@ -490,33 +444,6 @@
     background: #2980b9;
 }
 
-/* Live Camera Modal */
-/* Bigger Live Camera Modal */
-.video-container {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: black;
-    padding: 15px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    z-index: 1000;
-    width: 820px;
-    height: 620px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 30px;
-}
-
-.video-container video {
-    width: 800px;
-    height: 600px;
-    display: block;
-    border-radius: 10px;
-}
-
 .close-video-btn {
     position: absolute;
     top: 10px;
@@ -545,7 +472,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    justify-content:center;
+    justify-content: center;
     align-items: center;
     margin: auto;
 }
@@ -553,67 +480,79 @@
 /* ------------------upload from computer -----------------*/
 
 .upload-content {
-    background: #000;
+    background: white;
     padding: 20px;
     border-radius: 10px;
     text-align: center;
     color: white;
     position: relative;
-    width: 820px;
-    height: 630px;
+    width: 1200px;
+    height: 740px;
     margin-top: 30px;
     justify-content: center;
 }
 
+.videoFile, .uploadBtn {
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 800px;
+    max-width: 800px;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 .close-btn {
     position: absolute;
+    background: black;
     top: 10px;
     right: 15px;
-    background: none;
     color: white;
     font-size: 24px;
     border: none;
     cursor: pointer;
 }
 
-.browse-btn {
-    background: #34c759;
-    color: white;
-    margin-top: 50px;
-    padding: 10px 20px;
+.upload-popup iframe {
+    width: 100%;
+    height: calc(100% - 40px);
     border: none;
-    cursor: pointer;
-    font-size: 16px;
 }
 
-.submit-btn {
-    background: #34c759;
+.popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    height: 80%;
+    background: white;
+    border: 2px solid #ccc;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.popup-header {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    background: #f1f1f1;
+}
+
+.popup-header button {
+    background: red;
     color: white;
-    padding: 10px 20px;
     border: none;
+    padding: 5px 10px;
     cursor: pointer;
-    font-size: 16px;
-    margin-top: 60px;
 }
 
-.drag-drop {
-    border: 2px dashed white;
-    padding: 210px;
-    margin-bottom: 5px;
-    font-size: 18px;
-    cursor: pointer;
-    margin-top: 50px;
-}
-
-.file-preview {
-    text-align: center;
-    margin-top: 50px;
-}
-
-#previewContainer img,
-#previewContainer video {
-    max-width: 120%;
-    max-height: 400px;
-    display: block;
-    margin: auto;
+.popup iframe {
+    width: 100%;
+    height: calc(100% - 40px);
+    border: none;
 }
