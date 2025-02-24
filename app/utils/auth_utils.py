@@ -1,13 +1,12 @@
-from fastapi import Depends, HTTPException, status
+from fastapi import HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
-from jwt import InvalidTokenError
 from passlib.context import CryptContext
 from sqlalchemy.orm import Session
 
 from datetime import datetime, timedelta
 import jwt
 
-from app.models import admin_model
+from app.models import admin_model, role_model
 from app.schemas import admin_schema
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -24,14 +23,13 @@ REFRESH_EXPIRY = 30
 def create_access_token(data: dict, expire_delta: timedelta = None):
     to_encode = data.copy()
     if expire_delta:
-        expire_delta = datetime.utcnow() + expire_delta
+        expire = datetime.utcnow() + expire_delta
     else:
-        expire_delta = datetime.utcnow() + timedelta(minutes=ACCESS_EXPIRY)
-    to_encode.update({"exp": expire_delta})
-
+        expire = datetime.utcnow() + timedelta(minutes=ACCESS_EXPIRY)
+    to_encode.update({"exp": expire})
     payload = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
 
-    return payload
+    return payload, expire
 
 
 # def create_refresh_token(data: dict, expire_delta: timedelta = None):
@@ -45,57 +43,26 @@ def create_access_token(data: dict, expire_delta: timedelta = None):
 #     return jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
 
 
-def decode_token(token: str, credentials_exception):
+async def get_current_user(request):
     try:
-        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
-        return payload
-    except InvalidTokenError:
-        return credentials_exception
-
-
-def get_current_user(token: str = Depends(oauth)):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
-        headers={"WWW-Authenticate": "Bearer"},
-    )
-    payload = decode_token(token, credentials_exception)
-    print(f"Payload: {payload}")
-
-    return payload
-
-
-# class JWTBearer(HTTPBearer):
-#     def __init__(self, auto_error: bool = True):
-#         super(JWTBearer, self).__init__(auto_error=auto_error)
-#
-#     async def __call__(self, request: Request):
-#         credentials: HTTPAuthorizationCredentials = await super(JWTBearer, self).__call__(request)
-#         print(f">>>>>>>>>>>>>>>>>>>>{credentials}")
-#         print(f">>>>>>>>>>>>>>>>>>>>{credentials.scheme}")
-#         print(f">>>>>>>>>>>>>>>>>>>>{credentials.credentials}")
-#
-#         if credentials:
-#             if not credentials.scheme == "Bearer":
-#                 print("check 1")
-#                 raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Invalid authentication scheme.")
-#             if not self.verify_jwt(credentials.credentials):
-#                 print("check 2")
-#                 raise HTTPException(status_code=status.HTTP_410_GONE, detail="Invalid token or expired token.")
-#             return credentials.credentials
-#
-#         else:
-#             print("check 3")
-#             raise HTTPException(status_code=status.HTTP_402_PAYMENT_REQUIRED, detail="Invalid authorization code.")
-#
-#     @staticmethod
-#     def verify_jwt(token: str) -> bool:
-#         try:
-#             payload = decode_token(token)
-#             return True
-#         except jwt.ExpiredSignatureError:
-#             print("error")
-#             return False
+        get_token: str = request.cookies.get("access")
+        if get_token is None:
+            return None
+        payload = jwt.decode(get_token, SECRET_KEY, algorithms=[ALGORITHM])
+        if payload is None:
+            raise HTTPException(
+                status_code=status.HTTP_401_UNAUTHORIZED,
+                detail="Could not validate credentials",
+                headers={"WWW-Authenticate": "Bearer"}
+            )
+        user_id = int(payload.get("sub"))
+        if not user_id:
+            return None
+        return user_id
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
 
 
 def get_hashed_password(password: str) -> str:
@@ -107,22 +74,31 @@ def verify_password(password: str, hashed_password: str) -> bool:
 
 
 def create_admin(data: admin_schema.CreateAdmin, db: Session):
-    if not data.username or not data.password:
+    if not data.email or not data.password:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Details not provided.",
         )
 
-    check_user_exists = db.query(admin_model.Admin).filter(admin_model.Admin.username == data.username).first()
+    check_user_exists = db.query(admin_model.Admin).filter(admin_model.Admin.email == data.email).first()
     if check_user_exists:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
-            detail=f"User with {data.username} already exists"
+            detail=f"User with {data.email} already exists"
         )
 
-    hashed_password = get_hashed_password(data.password)
-    insert_admin = admin_model.Admin(name=data.name, username=data.username, password=hashed_password)
+    user_role = db.query(role_model.Role).filter(role_model.Role.role_type == "user").first()
+    if not user_role:
+        user_role = role_model.Role(role_type="user")
+        db.add(user_role)
+        db.commit()
+        db.refresh(user_role)
 
+    hashed_password = get_hashed_password(data.password)
+    insert_admin = admin_model.Admin(name=data.name,
+                                     email=data.email,
+                                     password=hashed_password,
+                                     role_id=user_role.role_id)
     db.add(insert_admin)
     db.commit()
     db.refresh(insert_admin)
@@ -131,15 +107,30 @@ def create_admin(data: admin_schema.CreateAdmin, db: Session):
 
 
 def fetch_admin(data, db: Session):
-    get_admin = db.query(admin_model.Admin).filter(admin_model.Admin.username == data.username).first()
+    get_admin = db.query(admin_model.Admin).filter(admin_model.Admin.email == data.username).first()
     if not get_admin:
-        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                            detail="User not found")
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
     if not get_admin or not verify_password(data.password, get_admin.password):
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Invalid Credentials")
+        raise HTTPException(
+            status_code=status.HTTP_401_UNAUTHORIZED,
+            detail="Invalid Credentials"
+        )
 
     return get_admin
+
+
+def fetch_admin_by_id(data, db: Session):
+    get_by_id = db.query(admin_model.Admin).filter(admin_model.Admin.id == data).first()
+    if not get_by_id:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="User not found"
+        )
+
+    return get_by_id
 
 
 def fetch_all(db: Session):
