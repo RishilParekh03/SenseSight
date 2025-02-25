@@ -14,7 +14,7 @@
         <h1 class="navbar-title">SenseSight.ai</h1>
         <div class="navbar-icon">
             <button class="profile-btn" onclick="toggleProfileMenu()">
-                <img src="user.png" alt="User Icon">
+                <img src="../static/images/user.jpeg" alt="User Icon">
             </button>
         </div>
     </div>
@@ -33,23 +33,12 @@
                     intuitive and seamless experience.
                 </p>
                 <div class="buttons">
-                    <button class="action-button" onclick="showUploadPopup()"><b>Upload from computer</b></button>
-                    <button class="action_1-button" onclick="startLiveCam()"><b>Live Cam</b></button>
+                    <button class="action-button" onclick="showUploadPopup()"><b>Upload</b></button>
                 </div>
                 <div id="uploadPopup" class="upload-popup">
                     <div class="upload-content">
-                        <button class="close-btn" onclick="closeUploadPopup()">&times;</button>
-                        <div id="uploadOptions">
-                            <button class="browse-btn" onclick="triggerFileSelect()">Browse from Gallery</button>
-                            <div id="dragDropArea" class="drag-drop">Drag and Drop</div>
-                            <input type="file" id="fileInput" accept="image/*, video/*" hidden
-                                   onchange="handleFileUpload(event)">
-                        </div>
-                        <div id="filePreview" class="file-preview" style="display: none;">
-                            <div id="previewContainer"></div>
-                            <p id="fileName"></p>
-                            <button class="submit-btn">Submit</button>
-                        </div>
+                        <button class="upload-close-btn" onclick="closeUploadPopup()">&times;</button>
+                        <iframe id="apiFrame" allow="camera" src=""></iframe>
                     </div>
                 </div>
             </div>
@@ -60,13 +49,13 @@
     <button class="close-btn" onclick="toggleProfileMenu()">×</button>
     <div class="profile-menu-content">
         <div class="profile-avatar">
-            <div class="avatar-circle"></div>
-            <button class="edit-btn">Edit Profile Picture</button>
+            <div class="avatar-circle">
+                <img src="../static/images/profile-user.jpeg" alt="Profile icon">
+            </div>
         </div>
         <ul class="profile-options">
             <li id="personalDetailsBtn" onclick="openPersonalDetails()">Personal Details <span>›</span></li>
             <li id="passwordBtn" onclick="openPassword()">Change Password <span>›</span></li>
-            <li>History <span>›</span></li>
         </ul>
         <button class="logout-btn">Log Out</button>
     </div>
@@ -76,22 +65,25 @@
     <div class="modal-content">
         <button class="close-btn" onclick="closePersonalDetails()">×</button>
         <div class="profile-avatar">
-            <div class="avatar-circle"></div>
+            <div class="avatar-circle">
+                <img src="../static/images/profile-user.jpeg" alt="Profile icon">
+            </div>
         </div>
         <h2>Personal Details</h2>
         <form id="detailsForm">
             <div class="form-group">
                 <label for="name"><i class="icon-user"></i> Name:</label>
-                <input type="text" id="name" name="name" readonly>
+                <input type="text" id="name" placeholder="{{ data.name }}" readonly>
             </div>
             <div class="form-group">
-                <label for="username"><i class="icon-user"></i> Username:</label>
-                <input type="text" id="username" name="username" readonly>
+                <label for="email"><i class="icon-user"></i> Username:</label>
+                <input type="email" id="email" placeholder="{{ data.email }}" readonly>
             </div>
             <div class="form-group">
-                <label for="created_at">Created At:</label>
-                <input type="text" id="created_at" name="created_at" readonly>
+                <label for="created_at"><i class="icon-phone"></i> Created_at:</label>
+                <input type="text" id="created_at" placeholder="{{ data.created_at }}" readonly>
             </div>
+            <button class="submit-btn"><a href="/dashboard/profile/edit">Edit Profile</a></button>
         </form>
     </div>
 </div>
@@ -105,13 +97,6 @@
             characters (!$@%).
         </p>
         <form id="passwordForm">
-            <div class="form-group">
-                <label for="currentPassword"><i class="icon-user"></i> Current Password :</label>
-                <div class="password-container">
-                    <input type="password" id="currentPassword" placeholder="Current password" required>
-                    <i class="toggle-password" onclick="togglePasswordVisibility('currentPassword')">👁️</i>
-                </div>
-            </div>
             <div class="form-group">
                 <label for="newPassword"><i class="icon-user"></i> New password :</label>
                 <div class="password-container">
@@ -130,10 +115,6 @@
         </form>
     </div>
 </div>
-<script>
-    window.userData = {{ user_data | tojson }};
-    console.log("User Data in html:", window.userData);
-</script>
 <script src="../static/js/script.js"></script>
 </body>
 

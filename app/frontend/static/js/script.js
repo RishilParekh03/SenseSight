@@ -2,10 +2,12 @@ document.addEventListener("DOMContentLoaded", () => {
     setupEventListeners();
 });
 
-// Scroll to target section
-function scrollToSection(sectionId) {
-    const targetSection = document.getElementById(sectionId);
-    targetSection?.scrollIntoView({ behavior: "smooth", block: "start" });
+// Setup event listeners
+function setupEventListeners() {
+    document.getElementById("personalDetailsBtn")?.addEventListener("click", openPersonalDetails);
+    document.getElementById("passwordForm")?.addEventListener("submit", validatePasswordForm);
+    document.querySelector(".logout-btn")?.addEventListener("click", showLogoutConfirmation);
+    document.getElementById("dragDropArea")?.addEventListener("dragover", event => event.preventDefault());
 }
 
 // Toggle profile menu
@@ -33,21 +35,26 @@ function toggleModal(sectionId, state) {
         setTimeout(() => section.classList.remove("active"), 300);
     }
 }
-let userData = window.userData || {};
+
+// let userData = window.userData || {};
+// console.log("User Data in js:", userData);
 
 // Open/Close personal details
 function openPersonalDetails() {
     closePassword();
-
-    console.log("User Data in js:", window.userData);
+    console.log("Opening personal details...");
     if (window.userData) {
-        document.getElementById("name").value = window.userData.name || "";
-        document.getElementById("username").value = window.userData.username || "";
-        document.getElementById("created_at").value = window.userData.created_at || "";
+        console.log("Filling form with:", window.userData);
+        document.getElementById("name").value = userData.name || "";
+        document.getElementById("email").value = userData.email || "";
+        document.getElementById("created_on").value = userData.created_on || "";
+    } else {
+        console.warn("User data is missing!");
     }
 
     toggleModal("personalDetails", true);
 }
+
 function closePersonalDetails() {
     toggleModal("personalDetails", false);
 }
@@ -57,6 +64,7 @@ function openPassword() {
     closePersonalDetails();
     toggleModal("password", true);
 }
+
 function closePassword() {
     toggleModal("password", false);
 }
@@ -104,28 +112,30 @@ function showLogoutConfirmation() {
     `;
     document.body.appendChild(popup);
 }
+
 function closeLogoutPopup() {
     document.querySelector(".logout-popup")?.remove();
 }
+
 function logout() {
     closeLogoutPopup();
-    var logoutXhr = new XMLHttpRequest();
-    logoutXhr.open("POST", "http://127.0.0.1:8000/auth/logout", true);
-    logoutXhr.withCredentials = true;
+    const ajax = new XMLHttpRequest();
+    ajax.open("POST", "/auth/logout", true);
+    ajax.withCredentials = true;
 
-    logoutXhr.onload = function () {
-        if (logoutXhr.status === 200) {
-            window.location.href = "/";
+    ajax.onload = function () {
+        if (ajax.status === 200) {
+            window.location.href = "/login";
         } else {
-            alert("Error logging out.");
+            alert("Error in logging out");
         }
     };
 
-    logoutXhr.onerror = function () {
-        alert("Error logging out.");
+    ajax.onerror = function () {
+        alert("Error in logging out");
     };
 
-    logoutXhr.send();
+    ajax.send();
 }
 
 // Start and stop live camera
@@ -137,50 +147,27 @@ function startLiveCam() {
         <button class="close-video-btn" onclick="stopLiveCam()">×</button>
     `;
     document.body.appendChild(videoContainer);
-    navigator.mediaDevices.getUserMedia({ video: { facingMode: "user", width: 800, height: 600 } })
+    navigator.mediaDevices.getUserMedia({video: {facingMode: "user", width: 800, height: 600}})
         .then(stream => document.getElementById("liveVideo").srcObject = stream)
-        .catch(() => { alert("Camera access denied."); videoContainer.remove(); });
+        .catch(() => {
+            alert("Camera access denied.");
+            videoContainer.remove();
+        });
 }
+
 function stopLiveCam() {
     const video = document.getElementById("liveVideo");
     video?.srcObject?.getTracks().forEach(track => track.stop());
     document.querySelector(".video-container")?.remove();
 }
 
-// File upload popup
-function showUploadPopup() { document.getElementById("uploadPopup").style.display = "flex"; }
-function closeUploadPopup() { document.getElementById("uploadPopup").style.display = "none"; }
-function triggerFileSelect() { document.getElementById("fileInput").click(); }
-function handleFileUpload(event) {
-    let file = event.target.files?.[0] || event.dataTransfer?.files[0];
-    if (!file) return;
-
-    document.getElementById("uploadOptions").style.display = "none";
-    document.getElementById("filePreview").style.display = "block";
-    document.getElementById("fileName").textContent = `File: ${file.name}`;
-
-    let previewContainer = document.getElementById("previewContainer");
-    previewContainer.innerHTML = "";
-
-    if (file.type.startsWith("image")) {
-        let img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        previewContainer.appendChild(img);
-    } else if (file.type.startsWith("video")) {
-        let video = document.createElement("video");
-        video.src = URL.createObjectURL(file);
-        video.controls = true;
-        previewContainer.appendChild(video);
-    }
+// // File upload popup
+function showUploadPopup() {
+    document.getElementById("uploadPopup").style.display = "flex";
+    document.getElementById("apiFrame").src = "https://marten-wondrous-llama.ngrok-free.app/";
 }
 
-// Setup event listeners
-function setupEventListeners() {
-    document.getElementById("personalDetailsBtn")?.addEventListener("click", openPersonalDetails);
-    document.getElementById("passwordForm")?.addEventListener("submit", validatePasswordForm);
-    document.querySelector(".logout-btn")?.addEventListener("click", showLogoutConfirmation);
-    document.getElementById("dragDropArea")?.addEventListener("dragover", event => event.preventDefault());
-    document.getElementById("dragDropArea")?.addEventListener("drop", handleFileUpload);
+function closeUploadPopup() {
+    document.getElementById("uploadPopup").style.display = "none";
+    document.getElementById("apiFrame").src = ""; // Stop API call 
 }
-
-document.addEventListener("DOMContentLoaded", setupEventListeners);
