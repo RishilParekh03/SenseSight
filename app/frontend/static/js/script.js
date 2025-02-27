@@ -36,22 +36,9 @@ function toggleModal(sectionId, state) {
     }
 }
 
-// let userData = window.userData || {};
-// console.log("User Data in js:", userData);
-
 // Open/Close personal details
 function openPersonalDetails() {
     closePassword();
-    console.log("Opening personal details...");
-    if (window.userData) {
-        console.log("Filling form with:", window.userData);
-        document.getElementById("name").value = userData.name || "";
-        document.getElementById("email").value = userData.email || "";
-        document.getElementById("created_on").value = userData.created_on || "";
-    } else {
-        console.warn("User data is missing!");
-    }
-
     toggleModal("personalDetails", true);
 }
 
@@ -138,36 +125,13 @@ function logout() {
     ajax.send();
 }
 
-// Start and stop live camera
-function startLiveCam() {
-    const videoContainer = document.createElement("div");
-    videoContainer.classList.add("video-container");
-    videoContainer.innerHTML = `
-        <video id="liveVideo" autoplay></video>
-        <button class="close-video-btn" onclick="stopLiveCam()">×</button>
-    `;
-    document.body.appendChild(videoContainer);
-    navigator.mediaDevices.getUserMedia({video: {facingMode: "user", width: 800, height: 600}})
-        .then(stream => document.getElementById("liveVideo").srcObject = stream)
-        .catch(() => {
-            alert("Camera access denied.");
-            videoContainer.remove();
-        });
+// File upload popup
+function showDetectionPopup() {
+    document.getElementById("detectionPopup").style.display = "flex";
+    document.getElementById("apiFrame").src = "";
 }
 
-function stopLiveCam() {
-    const video = document.getElementById("liveVideo");
-    video?.srcObject?.getTracks().forEach(track => track.stop());
-    document.querySelector(".video-container")?.remove();
-}
-
-// // File upload popup
-function showUploadPopup() {
-    document.getElementById("uploadPopup").style.display = "flex";
-    document.getElementById("apiFrame").src = "https://marten-wondrous-llama.ngrok-free.app/";
-}
-
-function closeUploadPopup() {
-    document.getElementById("uploadPopup").style.display = "none";
-    document.getElementById("apiFrame").src = ""; // Stop API call 
+function closeDetectionPopup() {
+    document.getElementById("detectionPopup").style.display = "none";
+    document.getElementById("apiFrame").src = ""; // Stop API call
 }

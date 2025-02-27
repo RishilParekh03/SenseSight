@@ -33,11 +33,12 @@
                     intuitive and seamless experience.
                 </p>
                 <div class="buttons">
-                    <button class="action-button" onclick="showUploadPopup()"><b>Upload</b></button>
+                    <button class="action-button" onclick="showDetectionPopup()"><b>Start Detection</b></button>
                 </div>
-                <div id="uploadPopup" class="upload-popup">
-                    <div class="upload-content">
-                        <button class="upload-close-btn" onclick="closeUploadPopup()">&times;</button>
+                <div id="detectionPopup" class="detection-popup">
+                    <div class="detection-content">
+
+                        <button class="popup-close-btn" onclick="closeDetectionPopup()">&#11164;</button>
                         <iframe id="apiFrame" allow="camera" src=""></iframe>
                     </div>
                 </div>
@@ -83,7 +84,7 @@
                 <label for="created_at"><i class="icon-phone"></i> Created_at:</label>
                 <input type="text" id="created_at" placeholder="{{ data.created_at }}" readonly>
             </div>
-            <button class="submit-btn"><a href="/dashboard/profile/edit">Edit Profile</a></button>
+            <button class="edit-btn"><a href="/dashboard/profile/edit" id="edit-link">Edit Profile</a></button>
         </form>
     </div>
 </div>

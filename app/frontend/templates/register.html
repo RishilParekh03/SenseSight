@@ -47,38 +47,47 @@
     </div>
 </div>
 <script>
-    const name = document.getElementById('full-name').value;
-    const email = document.getElementById('email').value;
-    const password = document.getElementById('password').value;
-    const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!$@%])[A-Za-z\d!$@%]{6,}$/;
-    const length = document.getElementById("length");
-    const letter = document.getElementById("letter");
-    const special = document.getElementById("special");
+    document.getElementById("password").addEventListener("input", function () {
+        const password = this.value;
+        const lengthCriteria = document.getElementById("length");
+        const letterCriteria = document.getElementById("letter");
+        const specialCriteria = document.getElementById("special");
 
-    password.addEventListener("input", function () {
-        const passwordInput = password.value;
+        if (password.length >= 6) {
+            lengthCriteria.querySelector(".dot").textContent = "🟢";
+            lengthCriteria.style.color = "green";
+        } else {
+            lengthCriteria.querySelector(".dot").textContent = "🔴";
+            lengthCriteria.style.color = "red";
+        }
 
-        const hasLength = passwordInput.length >= 6;
-        const hasLetter = /[A-Z]/.test(password) && /\d/.test(password);
-        const hasSpecial = /[!$@%]/.test(passwordInput);
+        const hasUpperCase = /[A-Z]/.test(password);
+        const hasDigit = /\d/.test(password);
+        if (hasUpperCase && hasDigit) {
+            letterCriteria.querySelector(".dot").textContent = "🟢";
+            letterCriteria.style.color = "green";
+        } else {
+            letterCriteria.querySelector(".dot").textContent = "🔴";
+            letterCriteria.style.color = "red";
+        }
 
-        updateUI(length, hasLength);
-        updateUI(letter, hasLetter);
-        updateUI(special, hasSpecial);
+        const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        if (hasSpecialChar) {
+            specialCriteria.querySelector(".dot").textContent = "🟢";
+            specialCriteria.style.color = "green";
+        } else {
+            specialCriteria.querySelector(".dot").textContent = "🔴";
+            specialCriteria.style.color = "red";
+        }
     });
 
-    function updateUI(element, condition) {
-        const dot = element.querySelector(".dot");
-        dot.textContent = condition ? "🟢" : "🔴";
-    }
 
     document.getElementById('submit').addEventListener('click', function (e) {
         e.preventDefault();
 
-        if (!passwordRegex.test(password)) {
-            alert("Password must be at least 6 characters with letters, numbers, and !$@%.");
-            return;
-        }
+        const name = document.getElementById('full-name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
 
         const ajax = new XMLHttpRequest();
 
