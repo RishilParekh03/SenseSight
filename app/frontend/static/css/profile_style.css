@@ -96,12 +96,6 @@ h2 {
     color: black;
 }
 
-.pwd-list {
-    list-style: none;
-    padding: 0 10px 10px;
-    font-size: .7em;
-}
-
 .submit-btn, .cancel-btn {
     background-color: #34c759;
     color: white;
