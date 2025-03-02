@@ -122,7 +122,7 @@
     gap: 10px;
 }
 
-.logout-btn, .submit-btn, .edit-btn, .action-button {
+.logout-btn, .change-password-btn, .edit-btn, .action-button {
     padding: 10px 20px;
     background: #34c759;
     color: white;
@@ -133,7 +133,7 @@
     transition: background 0.3s;
 }
 
-.logout-btn:hover, .button:hover, .submit-btn:hover, .action-button:hover {
+.logout-btn:hover, .button:hover, .change-password-btn:hover, .action-button:hover {
     background: #28a745;
 }
 

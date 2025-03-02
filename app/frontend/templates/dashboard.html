@@ -1,24 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SenseSight.ai - Home</title>
-    <link rel="stylesheet" href="../static/css/dashboard_style.css">
+    <link rel="stylesheet" href="../static/css/test.css">
 </head>
-
 <body>
 <header class="navbar">
     <div class="navbar-content">
+        <button class="hamburger-btn" onclick="toggleMenu()">
+            <span class="hamburger-icon">&#9776;</span>
+            <span class="close-icon">&#10005;</span>
+        </button>
         <h1 class="navbar-title">SenseSight.ai</h1>
         <div class="navbar-icon">
-            <button class="profile-btn" onclick="toggleProfileMenu()">
+            <button class="profile-btn" onclick="openProfileDetails()">
                 <img src="../static/images/user.jpeg" alt="User Icon">
             </button>
         </div>
     </div>
 </header>
+<div id="sideMenu" class="side-menu">
+    <ul class="menu-options">
+        <li onclick="window.location.href='/dashboard/home'">Home</li>
+        <li onclick="window.location.href='#'">History</li>
+        <li onclick="window.location.href='#'">About Us</li>
+        <li onclick="showLogoutConfirmation()">Log Out</li>
+    </ul>
+</div>
 <div class="main-container">
     <section class="section" id="details-section">
         <div class="content">
@@ -37,34 +47,22 @@
                 </div>
                 <div id="detectionPopup" class="detection-popup">
                     <div class="detection-content">
-
                         <button class="popup-close-btn" onclick="closeDetectionPopup()">&#11164;</button>
-                        <iframe id="apiFrame" allow="camera" src=""></iframe>
+                        <iframe id="apiFrame" allow="camera" src="" title="detection-frame"></iframe>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 </div>
-<div id="profile-menu" class="profile-menu">
-    <button class="close-btn" onclick="toggleProfileMenu()">×</button>
-    <div class="profile-menu-content">
-        <div class="profile-avatar">
-            <div class="avatar-circle">
-                <img src="../static/images/profile-user.jpeg" alt="Profile icon">
-            </div>
-        </div>
-        <ul class="profile-options">
-            <li id="personalDetailsBtn" onclick="openPersonalDetails()">Personal Details <span>›</span></li>
-            <li id="passwordBtn" onclick="openPassword()">Change Password <span>›</span></li>
-        </ul>
-        <button class="logout-btn">Log Out</button>
+<footer class="footer">
+    <div class="footer-content">
+        <p>&copy; 2025 SenseSight.ai. All rights reserved.</p>
     </div>
-</div>
-
-<div id="personalDetails" class="modal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closePersonalDetails()">×</button>
+</footer>
+<div id="profileDetails" class="profile-popup">
+    <div class="profile-popup-content">
+        <button class="close-btn" onclick="closeProfileDetails()">×</button>
         <div class="profile-avatar">
             <div class="avatar-circle">
                 <img src="../static/images/profile-user.jpeg" alt="Profile icon">
@@ -81,42 +79,22 @@
                 <input type="email" id="email" placeholder="{{ data.email }}" readonly>
             </div>
             <div class="form-group">
-                <label for="created_at"><i class="icon-phone"></i> Created_at:</label>
+                <label for="created_at"><i class="icon-phone"></i> Created at:</label>
                 <input type="text" id="created_at" placeholder="{{ data.created_at }}" readonly>
             </div>
             <button class="edit-btn"><a href="/dashboard/profile/edit" id="edit-link">Edit Profile</a></button>
         </form>
     </div>
 </div>
-
-<div id="password" class="modal">
-    <div class="modal-content">
-        <button class="close-btn" onclick="closePassword()">×</button>
-        <h2>Change password</h2>
-        <p>
-            Your password must be at least 6 characters and should include a combination of numbers, letters and special
-            characters (!$@%).
-        </p>
-        <form id="passwordForm">
-            <div class="form-group">
-                <label for="newPassword"><i class="icon-user"></i> New password :</label>
-                <div class="password-container">
-                    <input type="password" id="newPassword" placeholder="New password" required>
-                    <i class="toggle-password" onclick="togglePasswordVisibility('newPassword')">👁️</i>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="retypePassword"><i class="icon-phone"></i> Re-type new password :</label>
-                <div class="password-container">
-                    <input type="password" id="retypePassword" placeholder="Re-type new password" required>
-                    <i class="toggle-password" onclick="togglePasswordVisibility('retypePassword')">👁️</i>
-                </div>
-            </div>
-            <button type="submit" class="submit-btn">Change password</button>
-        </form>
+<div id="logoutPopup" class="logout-popup">
+    <div class="popup-content">
+        <p>Are you sure you want to log out?</p>
+        <div class="popup-buttons">
+            <button class="popup-btn yes-btn" onclick="logout()">Yes</button>
+            <button class="popup-btn no-btn" onclick="closeLogoutPopup()">No</button>
+        </div>
     </div>
 </div>
-<script src="../static/js/script.js"></script>
+<script src="../static/js/test.js"></script>
 </body>
-
 </html>

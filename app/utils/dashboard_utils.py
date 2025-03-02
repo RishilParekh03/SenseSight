@@ -1,7 +1,7 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
 
-from app.models import admin_model
+from app.vo import admin_vo
 from app.schemas import dashboard_schema
 
 

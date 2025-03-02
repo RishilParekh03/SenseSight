@@ -14,6 +14,5 @@ class CreateAdmin(BaseModel):
     password: str
 
 
-class GetAdmin(BaseModel):
-    email: str
-    password: str
+class NewGetPassword(BaseModel):
+    newPassword: str

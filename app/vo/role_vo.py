@@ -9,4 +9,5 @@ class Role(Base):
 
     role_id = Column("role_id", Integer, primary_key=True, index=True)
     role_type = Column("role_type", VARCHAR(6), unique=True, nullable=False, default="user")
+
     admin = relationship("Admin", back_populates="role", cascade="all, delete-orphan")

@@ -7,6 +7,7 @@ function setupEventListeners() {
     document.getElementById("personalDetailsBtn")?.addEventListener("click", openPersonalDetails);
     document.getElementById("passwordForm")?.addEventListener("submit", validatePasswordForm);
     document.querySelector(".logout-btn")?.addEventListener("click", showLogoutConfirmation);
+    // document.querySelector(".change-password-btn")?.addEventListener("click", changePassword);
     document.getElementById("dragDropArea")?.addEventListener("dragover", event => event.preventDefault());
 }
 
@@ -68,7 +69,6 @@ function togglePasswordVisibility(inputId) {
 // Validate password form
 function validatePasswordForm(event) {
     event.preventDefault();
-    const currentPassword = document.getElementById("currentPassword").value.trim();
     const newPassword = document.getElementById("newPassword").value.trim();
     const retypePassword = document.getElementById("retypePassword").value.trim();
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!$@%])[A-Za-z\d!$@%]{6,}$/;
@@ -81,8 +81,34 @@ function validatePasswordForm(event) {
         alert("Passwords do not match.");
         return;
     }
-    alert("Password changed successfully!");
 }
+
+// function changePassword(event) {
+//     event.preventDefault();
+//     const newPassword = document.getElementById("newPassword").value;
+//         const retypePassword = document.getElementById("retypePassword").value;
+//
+//         const ajax = new XMLHttpRequest();
+//
+//         ajax.open("PUT", "/auth/change-password/{{ data.user_id }}", true);
+//         ajax.setRequestHeader('Content-Type', 'application/json');
+//
+//         ajax.onload = function () {
+//             if (ajax.status === 200) {
+//                 window.location.href = "/dashboard/home";
+//             } else if (ajax.status === 404) {
+//                 alert("Please enter password")
+//             } else {
+//                 alert("Error in changing password");
+//             }
+//         };
+//
+//         const newCredentials = {
+//             newPassword: newPassword
+//         };
+//
+//         ajax.send(JSON.stringify(newCredentials));
+// }
 
 // Logout confirmation popup
 function showLogoutConfirmation() {
