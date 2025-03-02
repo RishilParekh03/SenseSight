@@ -7,6 +7,7 @@ function setupEventListeners() {
     document.getElementById("personalDetailsBtn")?.addEventListener("click", openPersonalDetails);
     document.getElementById("passwordForm")?.addEventListener("submit", validatePasswordForm);
     document.querySelector(".logout-btn")?.addEventListener("click", showLogoutConfirmation);
+    // document.querySelector(".change-password-btn")?.addEventListener("click", changePassword);
     document.getElementById("dragDropArea")?.addEventListener("dragover", event => event.preventDefault());
 }
 
@@ -36,22 +37,9 @@ function toggleModal(sectionId, state) {
     }
 }
 
-// let userData = window.userData || {};
-// console.log("User Data in js:", userData);
-
 // Open/Close personal details
 function openPersonalDetails() {
     closePassword();
-    console.log("Opening personal details...");
-    if (window.userData) {
-        console.log("Filling form with:", window.userData);
-        document.getElementById("name").value = userData.name || "";
-        document.getElementById("email").value = userData.email || "";
-        document.getElementById("created_on").value = userData.created_on || "";
-    } else {
-        console.warn("User data is missing!");
-    }
-
     toggleModal("personalDetails", true);
 }
 
@@ -81,7 +69,6 @@ function togglePasswordVisibility(inputId) {
 // Validate password form
 function validatePasswordForm(event) {
     event.preventDefault();
-    const currentPassword = document.getElementById("currentPassword").value.trim();
     const newPassword = document.getElementById("newPassword").value.trim();
     const retypePassword = document.getElementById("retypePassword").value.trim();
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!$@%])[A-Za-z\d!$@%]{6,}$/;
@@ -94,8 +81,34 @@ function validatePasswordForm(event) {
         alert("Passwords do not match.");
         return;
     }
-    alert("Password changed successfully!");
 }
+
+// function changePassword(event) {
+//     event.preventDefault();
+//     const newPassword = document.getElementById("newPassword").value;
+//         const retypePassword = document.getElementById("retypePassword").value;
+//
+//         const ajax = new XMLHttpRequest();
+//
+//         ajax.open("PUT", "/auth/change-password/{{ data.user_id }}", true);
+//         ajax.setRequestHeader('Content-Type', 'application/json');
+//
+//         ajax.onload = function () {
+//             if (ajax.status === 200) {
+//                 window.location.href = "/dashboard/home";
+//             } else if (ajax.status === 404) {
+//                 alert("Please enter password")
+//             } else {
+//                 alert("Error in changing password");
+//             }
+//         };
+//
+//         const newCredentials = {
+//             newPassword: newPassword
+//         };
+//
+//         ajax.send(JSON.stringify(newCredentials));
+// }
 
 // Logout confirmation popup
 function showLogoutConfirmation() {
@@ -138,36 +151,13 @@ function logout() {
     ajax.send();
 }
 
-// Start and stop live camera
-function startLiveCam() {
-    const videoContainer = document.createElement("div");
-    videoContainer.classList.add("video-container");
-    videoContainer.innerHTML = `
-        <video id="liveVideo" autoplay></video>
-        <button class="close-video-btn" onclick="stopLiveCam()">×</button>
-    `;
-    document.body.appendChild(videoContainer);
-    navigator.mediaDevices.getUserMedia({video: {facingMode: "user", width: 800, height: 600}})
-        .then(stream => document.getElementById("liveVideo").srcObject = stream)
-        .catch(() => {
-            alert("Camera access denied.");
-            videoContainer.remove();
-        });
+// File upload popup
+function showDetectionPopup() {
+    document.getElementById("detectionPopup").style.display = "flex";
+    document.getElementById("apiFrame").src = "";
 }
 
-function stopLiveCam() {
-    const video = document.getElementById("liveVideo");
-    video?.srcObject?.getTracks().forEach(track => track.stop());
-    document.querySelector(".video-container")?.remove();
-}
-
-// // File upload popup
-function showUploadPopup() {
-    document.getElementById("uploadPopup").style.display = "flex";
-    document.getElementById("apiFrame").src = "https://marten-wondrous-llama.ngrok-free.app/";
-}
-
-function closeUploadPopup() {
-    document.getElementById("uploadPopup").style.display = "none";
-    document.getElementById("apiFrame").src = ""; // Stop API call 
+function closeDetectionPopup() {
+    document.getElementById("detectionPopup").style.display = "none";
+    document.getElementById("apiFrame").src = ""; // Stop API call
 }
