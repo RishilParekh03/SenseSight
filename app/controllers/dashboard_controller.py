@@ -52,6 +52,7 @@ async def edit_profile(request: Request, db: Session = Depends(database.get_db))
 
 @router.put("/profile/edit/{user_id}")
 async def update_profile(user_id: int, request: dashboard_schema.UpdateProfile, db: Session = Depends(database.get_db)):
+    print()
     dashboard_service = DashboardServices(db)
     get_admin = dashboard_service.admin_update_profile(user_id, request)
     logger.logger.info(f"User updated profile: {get_admin.name}, {get_admin.email}")

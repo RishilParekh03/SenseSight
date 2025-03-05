@@ -2,7 +2,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-DATABASE_URL = "mysql+pymysql://root:root@192.168.1.31:3307/sensesight?charset=utf8"
+DATABASE_URL = "mysql+pymysql://root:root@192.168.1.34:3307/sensesight?charset=utf8"
 
 engine = create_engine(DATABASE_URL, echo=True)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)

@@ -377,7 +377,7 @@ body {
 }
 
 /******************************************************** Buttons */
-.action-button {
+.action-button, .edit-btn {
     background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
     color: white;
     border: none;
@@ -389,9 +389,13 @@ body {
     transition: all 0.3s ease;
 }
 
-.action-button:hover {
+.action-button:hover, .edit-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(106, 17, 203, 0.2);
+}
+
+.edit-btn{
+    width: 100%;
 }
 
 .profile-btn {
@@ -491,24 +495,6 @@ body {
     box-shadow: 0 0 0 3px rgba(106, 17, 203, 0.1);
 }
 
-.edit-btn {
-    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
-    color: white;
-    border: none;
-    padding: 0.8rem 1.5rem;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-    width: 100%;
-    margin-top: 1rem;
-    font-size: medium;
-    font-weight: bold;
-}
-
-#edit-link {
-    text-decoration: none;
-    color: white;
-}
 
 /****************************************************************** Logout Popup */
 .logout-popup {
@@ -656,7 +642,7 @@ body {
         padding: 1rem;
     }
 
-    .action-button {
+    .action-button, .edit-btn {
         width: 100%;
         padding: 16px;
     }
@@ -673,7 +659,7 @@ body {
         font-size: 1.8rem;
     }
 
-    .action-button {
+    .action-button, .edit-btn {
         width: 100%;
     }
 

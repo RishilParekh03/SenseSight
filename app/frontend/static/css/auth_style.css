@@ -307,6 +307,7 @@ h2 {
     border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
     z-index: 0;
     animation: float 20s infinite linear;
+    pointer-events: none;
 }
 
 @keyframes float {
