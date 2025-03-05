@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 
-from app.controllers import auth_controller, dashboard_controller
+from app.controllers import auth_controller, dashboard_controller, detection_data_controller
 from app.config.database import Base, engine
 from app.utils import logger
 
@@ -24,6 +24,7 @@ app.add_middleware(
 
 app.include_router(auth_controller.router, tags=["Authentication"])
 app.include_router(dashboard_controller.router, prefix='/dashboard', tags=["Dashboard"])
+app.include_router(detection_data_controller.router, prefix='/dashboard', tags=["Detection Data"])
 
 if __name__ == "__main__":
     logger.logger.info("Server Started")
