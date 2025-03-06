@@ -57,23 +57,3 @@ async def get_current_user(request):
 #
 #     return jwt.encode(to_encode, REFRESH_SECRET_KEY, algorithm=ALGORITHM)
 
-
-# def change_password(user_id: int, request: admin_schema.NewGetPassword, db: Session):
-#     get_admin_credential = db.query(admin_vo.Admin).filter(admin_vo.Admin.id == user_id).first()
-#     print(get_admin_credential)
-#     if not get_admin_credential:
-#         raise HTTPException(
-#             status_code=status.HTTP_404_NOT_FOUND,
-#             detail="User not found"
-#         )
-#
-#     if request.newPassword:
-#         print(request.newPassword)
-#         new_password = get_hashed_password(request.newPassword)
-#         get_admin_credential.password = new_password
-#
-#         db.merge(get_admin_credential)
-#         db.commit()
-#         db.refresh(get_admin_credential)
-#
-#         return get_admin_credential

@@ -15,13 +15,10 @@ class DataFetchStoreHistoryService:
     def fetch_detection_history(self, admin_id: int) -> Dict[str, int]:
         detections = self.detection_dao.get_detections_by_admin(admin_id)
         object_counts = {}
-        print("************************", detections)
         for detection in detections:
-            print(detection)
             if detection.detection_json:
                 try:
                     data = json.loads(detection.detection_json)
-                    print(data)
                     for obj, count in data.get('object_count').items():
                         object_counts[obj] = object_counts.get(obj, 0) + count
                 except json.JSONDecodeError:

@@ -1,28 +1,16 @@
 document.getElementById('submit').addEventListener('click', function (e) {
         e.preventDefault();
 
-    // const originalName = "{{ data.name }}";
-    // const originalEmail = "{{ data.email }}";
-    // const originalId = "{{ data.user_id }}";
     const originalName = document.getElementById('full-name').getAttribute('data-original');
     const originalEmail = document.getElementById('email').getAttribute('data-original');
     const userId = document.getElementById('user-id').value;
 
-
-    console.log(originalEmail)
-    console.log(originalName)
-    console.log(userId)
     const name = document.getElementById('full-name').value;
     const email = document.getElementById('email').value;
     const newPassword = document.getElementById('newPassword').value.trim();
     const reTypePassword = document.getElementById('reTypePassword').value.trim();
 
     const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[!$@%])[A-Za-z\d!$@%]{6,}$/;
-
-    // if (originalName === name && originalEmail === email ) {
-    //         alert("No changes detected!")
-    //         return;
-    //     }
 
     if (newPassword && reTypePassword) {
             if (!passwordRegex.test(newPassword)) {

@@ -2,13 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     setupEventListeners();
 });
 
-// Setup event listeners
 function setupEventListeners() {
     document.querySelector(".logout-btn")?.addEventListener("click", showLogoutConfirmation);
     document.getElementById("passwordForm")?.addEventListener("submit", validatePasswordForm);
 }
 
-// Toggle Side Menu
 function toggleMenu() {
     const sideMenu = document.getElementById("sideMenu");
     const toggleBtn = document.querySelector(".toggle-btn");
@@ -31,31 +29,26 @@ function blurBackground(state) {
     }
 }
 
-// Open Profile Details Popup
 function openProfileDetails() {
     document.getElementById("profileDetails").classList.add("active");
     blurBackground(true);
 }
 
-// Close Profile Details Popup
 function closeProfileDetails() {
     document.getElementById("profileDetails").classList.remove("active");
     blurBackground(false);
 }
 
-// Show Logout Confirmation Popup
 function showLogoutConfirmation() {
     document.getElementById("logoutPopup").classList.add("active");
     blurBackground(true);
 }
 
-// Close Logout Confirmation Popup
 function closeLogoutPopup() {
     document.getElementById("logoutPopup").classList.remove("active");
     blurBackground(false);
 }
 
-// Logout Function
 function logout() {
     closeLogoutPopup();
     const ajax = new XMLHttpRequest();
@@ -76,7 +69,6 @@ function logout() {
 
     ajax.send();
 }
-
 
 let detectionInterval;
 let previousObjectCount = null;
@@ -99,7 +91,7 @@ async function fetchAndStoreDetection() {
             return;
         }
         previousObjectCount = objectCountData.object_count;
-        console.log(objectCountData)
+        // console.log(objectCountData)
         const storeResponse = await fetch("http://127.0.0.1:8000/dashboard/store_detection",{
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -126,8 +118,6 @@ function stopDetectionPolling() {
     clearInterval(detectionInterval);
 }
 
-
-// File upload popup
 function showDetectionPopup() {
     document.getElementById("detectionPopup").style.display = "flex";
     document.getElementById("apiFrame").src = "http://127.0.0.1:8080/";

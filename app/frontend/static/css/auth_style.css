@@ -38,32 +38,6 @@ body {
     align-items: center;
 }
 
-/*.hamburger-btn {*/
-/*    background: none;*/
-/*    border: none;*/
-/*    cursor: pointer;*/
-/*    font-size: 1.8rem;*/
-/*    color: #6a11cb;*/
-/*    transition: transform 0.3s ease;*/
-/*    padding: 0.5rem;*/
-/*    border-radius: 8px;*/
-/*}*/
-
-/*.hamburger-btn .close-icon {*/
-/*    display: none;*/
-/*    color: #e74c3c;*/
-/*}*/
-
-/*.hamburger-btn:hover {*/
-/*    background: rgba(106, 17, 203, 0.1);*/
-/*}*/
-
-/*.navbar-title {*/
-/*    font-size: 1.8rem;*/
-/*    font-weight: 600;*/
-/*    letter-spacing: -0.5px;*/
-/*}*/
-
 
 .navbar-title {
     margin-left: 80px;
@@ -77,16 +51,6 @@ body {
     text-decoration: none;
     color: #2c3e50;
 }
-
-
-
-/*.navbar-icon img {*/
-/*    width: 45px;*/
-/*    height: 45px;*/
-/*    border-radius: 50%;*/
-/*    border: 2px solid #6a11cb;*/
-/*    transition: transform 0.3s ease;*/
-/*}*/
 
 .navbar-icon img:hover {
     transform: scale(1.05);

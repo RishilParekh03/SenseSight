@@ -29,10 +29,9 @@ async def store_detection(request: Request, db: Session = Depends(database.get_d
         user = await auth_utils.get_current_user(request)
         if not user:
             raise HTTPException(status_code=401, detail="Unauthorized")
-        print("//////////////////////", user)
         service = DataFetchStoreHistoryService(db)
         json_data = await request.json()
-        print(json_data)
+        # print(json_data)
         detection = service.store_detection_data(user, json_data)
         return {"status": "success", "detection_id": detection.detection_id}
 
@@ -49,10 +48,6 @@ async def history_page(request: Request, db: Session = Depends(database.get_db))
     service = DataFetchStoreHistoryService(db)
     object_counts = service.fetch_detection_history(user)
 
-    # return templates.TemplateResponse("history.html", {
-    #     "request": request,
-    #     "object_counts": object_counts
-    # })
     object_names = list(object_counts.keys())
     object_values = list(object_counts.values())
 

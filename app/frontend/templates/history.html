@@ -23,9 +23,9 @@
         </div>
     </header>
 <div id="sideMenu" class="side-menu">
-        <div class="side-menu-handler"> <!--logo-section div-->
+        <div class="side-menu-handler">
             <samp class="menu-text">Options</samp>
-            <button class="toggle-btn" onclick="toggleMenu()"> <!--- toggle-btn-->
+            <button class="toggle-btn" onclick="toggleMenu()">
                 <span class="toggle-icon">&#11166;</span>
                 <span class="close-icon">&#11164;</span>
             </button>
@@ -42,7 +42,6 @@
                 <i class="fas fa-info-circle"></i>
                 <span class="menu-text">About Us</span>
             </li>
-            <!--        <li onclick="showLogoutConfirmation()">Log Out</li>-->
         </ul>
         <ul class="logOutBtn">
             <li onclick="showLogoutConfirmation()">
@@ -86,7 +85,7 @@
                 <label for="created_at"><i class="icon-phone"></i> Created at:</label>
                 <input type="text" id="created_at" placeholder="{{ data.created_at }}" readonly>
             </div>
-            <button class="edit-btn"><a href="/dashboard/profile/edit" id="edit-link">Edit Profile</a></button>
+            <button class="edit-btn"><a href="/dashboard/profile/edit" style="text-decoration: none; color: white;" id="edit-link">Edit Profile</a></button>
         </form>
     </div>
 </div>

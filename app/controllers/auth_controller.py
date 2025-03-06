@@ -70,17 +70,4 @@ async def logout(response: Response):
     response.delete_cookie("access")
     return {"message": "Logout Successful"}
 
-# @router.put("/auth/change-password/{user_id}")
-# async def change_password(user_id: int, request: admin_schema.NewGetPassword, db: Session = Depends(database.get_db)):
-#     get_admin = auth_utils.change_password(user_id, request, db)
-#     print(get_admin)
-#     logger.logger.info(f"Password Updated: {get_admin.email}")
-#
-#     return {"message": "Password Updated Successful"}
 
-
-# @router.get("/users")
-# async def all_users(db: Session = Depends(database.get_db)):
-#     get_all = auth_utils.fetch_all(db)
-#
-#     return get_all

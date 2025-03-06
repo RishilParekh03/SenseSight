@@ -8,18 +8,16 @@ class DetectionDataDAO:
 
     def create_detection(self, admin_id: int, detection_json: dict) -> Detection:
         try:
-            print("-------------------------------",detection_json)
             print(type(detection_json))
             new_detection = Detection(
                 id=admin_id,
                 detection_json=detection_json,
-                # created_on=datetime.utcnow(),
-                # modified_on=datetime.utcnow()
+                created_on=datetime.utcnow(),
+                modified_on=datetime.utcnow()
             )
             self.db.add(new_detection)
             self.db.commit()
             self.db.refresh(new_detection)
-            print("********************",admin_id,detection_json)
             return new_detection
         except Exception as e:
             self.db.rollback()
