@@ -54,9 +54,9 @@
     <div class="main-container">
         <section class="section" id="details-section">
             <div class="content">
-                <div class="image-container">
+                <div class="video-container">
                     <!--<img src="../static/images/image_2.png" alt="Data Analysis Illustration">-->
-                    <video loop muted autoplay playsinline>
+                    <video loop muted autoplay playsinline disablepictureinpicture>
                         <source src="../static/videos/Traffic_video.webm" type="video/mp4">
                     </video>
                 </div>
@@ -107,7 +107,7 @@
                     <label for="created_at"><i class="icon-phone"></i> Created at:</label>
                     <input type="text" id="created_at" placeholder="{{ data.created_at }}" readonly>
                 </div>
-                <button class="edit-btn"><a href="/dashboard/profile/edit" id="edit-link" style="text-decoration: none; color: white;">Edit Profile</a></button>
+                <button class="edit-btn"><a href="/dashboard/profile/edit" id="edit-link">Edit Profile</a></button>
             </form>
         </div>
     </div>

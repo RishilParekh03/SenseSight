@@ -10,7 +10,6 @@ body {
     overflow: hidden;
 }
 
-/* Navbar Style */
 .navbar {
     position: fixed;
     top: 0;
@@ -38,14 +37,12 @@ body {
     align-items: center;
 }
 
-
 .navbar-title {
     margin-left: 80px;
     font-size: 1.8rem;
     color: #2c3e50;
     font-weight: 600;
     letter-spacing: -0.5px;
-
 }
 .navbar-title a {
     text-decoration: none;
@@ -109,7 +106,6 @@ body {
     color: #e74c3c;
 }
 
-/* Login Register Style */
 .user-container {
     display: flex;
     justify-content: center;
@@ -198,6 +194,13 @@ h2 {
 .cancel-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 8px 15px rgba(138, 95, 183, 0.2);
+}
+
+.cancel-btn a{
+    text-decoration: none;
+    display: flex;
+    color: white;
+    justify-content: center;
 }
 
 .account-query {
@@ -296,7 +299,6 @@ h2 {
     }
 }
 
-/* Responsive Enhancements */
 @media (max-width: 768px) {
     .text-container h2 {
         font-size: 2.2rem;
